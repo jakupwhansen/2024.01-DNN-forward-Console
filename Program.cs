@@ -1,8 +1,9 @@
-﻿
+﻿//-----ActivationFunction----------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.activationFunction = 1; //1=sigmoid, 2=TanH, 3=RelU
 //-----Tilføj input----------------------------------------------------------------------------
-DeepNeuralNetworkFarwardPass.input = new double[,] { { 0, 0, 1 } };
+DeepNeuralNetworkFarwardPass.input = new double[,] { {0,0,1} };
 //-----Tilføj vægte----------------------------------------------------------------------------
-DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,] 
+DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,]
 {{-1.0000,-0.5000,0.1250,0.5000},
 {-1.0000,0.0000,-0.5000,0.1111},
 {0.5000,-0.1667,-0.1667,0.0000},
@@ -17,7 +18,8 @@ DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,]
 {{0.0000,0.2000,0.0000},
 {-0.2500,-0.2000,-1.0000},
 {0.0000,0.0000,1.0000}});
-//------INPUT----------------------------------------------------------------------------------
+
+//------FarwardPass----------------------------------------------------------------------------------
 double[,] output = DeepNeuralNetworkFarwardPass.ForwardPass();
 //------OUTPUT print---------------------------------------------------------------------------
 DeepNeuralNetworkFarwardPass.MatrixMultiplication.PrintMatrix(output);
@@ -27,6 +29,7 @@ public class DeepNeuralNetworkFarwardPass
 {
     static List<double[,]> listeMedAlleVaegte = new List<double[,]>();
     public static double[,] input = null;
+    public static int activationFunction = 1; //1=sigmoid, 2=TanH, 3=RelU
     public static void addWeightsToList(double[,] v)
     {
         listeMedAlleVaegte.Add(v);
@@ -88,7 +91,12 @@ public class DeepNeuralNetworkFarwardPass
                         Console.Write("Sigmoid: " + Sigmoid(resultMatrix[i, j]) + " ");
                         Console.WriteLine();
                     }
-                    resultMatrix[i, j] = Sigmoid(resultMatrix[i, j]);
+                    if(activationFunction==1)
+                         resultMatrix[i, j] = Sigmoid(resultMatrix[i, j]);
+                    if (activationFunction == 2)
+                        resultMatrix[i, j] = Tanh(resultMatrix[i, j]);
+                    if (activationFunction == 3)
+                        resultMatrix[i, j] = ReLU(resultMatrix[i, j]);
 
                 }
             }
@@ -96,9 +104,17 @@ public class DeepNeuralNetworkFarwardPass
 
             return resultMatrix;
         }
-        public static double Sigmoid(double x)
+        static double Sigmoid(double x)
         {
             return 1.0 / (1.0 + Math.Exp(-x));
+        }
+        static double Tanh(double x)
+        {
+            return Math.Tanh(x);
+        }
+        static double ReLU(double x)
+        {
+            return Math.Max(0, x);
         }
         public static double[,] addCollumn(double[,] originalArray)
         {
