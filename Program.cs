@@ -1,29 +1,53 @@
-﻿//-----ActivationFunction----------------------------------------------------------------------
+﻿//    For hjælp, se billedet i folderen images
+
+//-----ActivationFunction----------------------------------------------------------------------
 DeepNeuralNetworkFarwardPass.activationFunction = 1; //1=sigmoid, 2=TanH, 3=RelU
-//-----Tilføj input----------------------------------------------------------------------------
-DeepNeuralNetworkFarwardPass.input = new double[,] { {0,0,1} };
 //-----Tilføj vægte----------------------------------------------------------------------------
 DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,]
-{{-1.0000,-0.5000,0.1250,0.5000},
-{-1.0000,0.0000,-0.5000,0.1111},
-{0.5000,-0.1667,-0.1667,0.0000},
-{0.1667,-0.1667,-0.1667,0.0000}});
+{{0.1250,-0.2500,0.0000,0.1111},
+{1.0000,0.0000,-0.1429,0.2000},
+{-0.2000,0.0000,0.0000,-1.0000},
+{0.2500,-0.1667,0.1111,0.3333}}
+);
 DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,]
-{{0.1111,-0.1111},
-{0.0000,0.0000},
-{0.0000,-0.2500},
-{0.1111,-0.2500},
-{-1.0000,-0.2500}});
+{{0.0000,-0.5000},
+{0.0000,-0.1111},
+{1.0000,0.0000},
+{-1.0000,0.1250},
+{-0.5000,0.5000}}
+);
 DeepNeuralNetworkFarwardPass.addWeightsToList(new double[,]
-{{0.0000,0.2000,0.0000},
-{-0.2500,-0.2000,-1.0000},
-{0.0000,0.0000,1.0000}});
-
-//------FarwardPass----------------------------------------------------------------------------------
-double[,] output = DeepNeuralNetworkFarwardPass.ForwardPass();
+{{0.0000,-0.1250,-0.2000},
+{-0.1429,1.0000,0.1429},
+{-0.1111,-0.1111,0.0000}}
+);
+// 1. prediction
+//-----Tilføj input----------------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.input = new double[,] { { 0.2, 0.4, 0.7 } };
+//------Prediction-----------------------------------------------------------------------------
+double[,] output = DeepNeuralNetworkFarwardPass.Prediction();
 //------OUTPUT print---------------------------------------------------------------------------
 DeepNeuralNetworkFarwardPass.MatrixMultiplication.PrintMatrix(output);
 //---------------------------------------------------------------------------------------------
+
+// 2. prediction
+//-----Tilføj input----------------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.input = new double[,] { { 0.1, 0.2, 0.3 } };
+//------Prediction-----------------------------------------------------------------------------
+output = DeepNeuralNetworkFarwardPass.Prediction();
+//------OUTPUT print---------------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.MatrixMultiplication.PrintMatrix(output);
+//---------------------------------------------------------------------------------------------
+
+// 3. prediction
+//-----Tilføj input----------------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.input = new double[,] { { 1, 0, 1 } };
+//------Prediction-----------------------------------------------------------------------------
+output = DeepNeuralNetworkFarwardPass.Prediction();
+//------OUTPUT print---------------------------------------------------------------------------
+DeepNeuralNetworkFarwardPass.MatrixMultiplication.PrintMatrix(output);
+//---------------------------------------------------------------------------------------------
+
 
 public class DeepNeuralNetworkFarwardPass
 {
@@ -35,7 +59,7 @@ public class DeepNeuralNetworkFarwardPass
         listeMedAlleVaegte.Add(v);
     }
 
-    public static double[,] ForwardPass()
+    public static double[,] Prediction()
     {
         input = MatrixMultiplication.addCollumn(input);
         foreach (var matrix in listeMedAlleVaegte)

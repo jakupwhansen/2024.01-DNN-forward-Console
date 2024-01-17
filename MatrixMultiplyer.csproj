@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\dnn arkitaktur.png" />
+    <None Remove="images\dnn.arkitektur.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\dnn arkitaktur.png" />
+    <Resource Include="images\dnn.arkitektur.png" />
   </ItemGroup>
 
 </Project>
